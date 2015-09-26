@@ -1,6 +1,8 @@
 # ExplosionField
 explosive dust effect view
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ExplosionField-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2554)
+
 ![explosionfield.gif](explosionfield.gif)
 
 ## Getting started
