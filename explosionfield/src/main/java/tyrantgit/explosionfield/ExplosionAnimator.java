@@ -55,7 +55,7 @@ public class ExplosionAnimator extends ValueAnimator {
             }
         }
         mContainer = container;
-        setFloatValues(new float[]{0f, END_VALUE});
+        setFloatValues(0f, END_VALUE);
         setInterpolator(DEFAULT_INTERPOLATOR);
         setDuration(DEFAULT_DURATION);
     }
@@ -94,7 +94,7 @@ public class ExplosionAnimator extends ValueAnimator {
             return false;
         }
         for (Particle particle : mParticles) {
-            particle.advance(((Float) getAnimatedValue()).floatValue());
+            particle.advance((float) getAnimatedValue());
             if (particle.alpha > 0f) {
                 mPaint.setColor(particle.color);
                 mPaint.setAlpha((int) (Color.alpha(particle.color) * particle.alpha));
