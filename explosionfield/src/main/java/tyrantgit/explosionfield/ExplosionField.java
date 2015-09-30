@@ -90,7 +90,7 @@ public class ExplosionField extends View {
         view.getGlobalVisibleRect(r);
         int[] location = new int[2];
         getLocationOnScreen(location);
-        r.offset(location[0], -location[1]);
+        r.offset(-location[0], -location[1]);
         r.inset(-mExpandInset[0], -mExpandInset[1]);
         int startDelay = 100;
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f).setDuration(150);
