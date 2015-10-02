@@ -4,7 +4,7 @@
 
 explosive dust effect for views
 
-![explosionfield.gif](explosionfield.gif)
+![explosionfield.gif](art/explosionfield.gif)
 
 ## Getting started
 
