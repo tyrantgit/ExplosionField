@@ -12,7 +12,7 @@ In your `build.gradle`:
 
 ```gradle
  dependencies {
-   compile 'tyrantgit:explosionfield:1.0.0'
+   compile 'tyrantgit:explosionfield:1.0.1'
  }
 ```
 
