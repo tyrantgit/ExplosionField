@@ -105,6 +105,20 @@ public class ExplosionField extends View {
 
             }
         });
+	animator.addListener(new AnimatorListener() {
+		@Override
+		public void onAnimationStart(Animator animation) { }
+		@Override
+		public void onAnimationRepeat(Animator animation) { }
+		@Override
+		public void onAnimationEnd(Animator animation) {
+			view.clearAnimation();
+			view.setTranslationX(0);
+			view.setTranslationY(0);
+		}
+		@Override
+		public void onAnimationCancel(Animator animation) { }
+	});
         animator.start();
         view.animate().setDuration(150).setStartDelay(startDelay).scaleX(0f).scaleY(0f).alpha(0f).start();
         explode(Utils.createBitmapFromView(view), r, startDelay, ExplosionAnimator.DEFAULT_DURATION);
