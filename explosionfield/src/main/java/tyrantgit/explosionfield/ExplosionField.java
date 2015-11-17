@@ -71,12 +71,16 @@ public class ExplosionField extends View {
         mExpandInset[1] = dy;
     }
 
-    public void explode(Bitmap bitmap, Rect bound, long startDelay, long duration) {
+
+
+    public void explode(Bitmap bitmap, Rect bound, long startDelay, long duration, final AnimatorListenerAdapter listenerAdapter) {
         final ExplosionAnimator explosion = new ExplosionAnimator(this, bitmap, bound);
         explosion.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mExplosions.remove(animation);
+                if(listenerAdapter != null)
+                listenerAdapter.onAnimationEnd(animation);
             }
         });
         explosion.setStartDelay(startDelay);
@@ -111,12 +115,9 @@ public class ExplosionField extends View {
 
 
         });
-        if(listenerAdapter != null){
-            animator.addListener(listenerAdapter);
-        }
         animator.start();
         view.animate().setDuration(150).setStartDelay(100).scaleX(0f).scaleY(0f).alpha(0f).start();
-        explode(Utils.createBitmapFromView(view), r, 100, duration);
+        explode(Utils.createBitmapFromView(view), r, 100, duration,listenerAdapter);
     }
 
     public void clear() {
