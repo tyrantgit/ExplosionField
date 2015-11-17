@@ -91,10 +91,10 @@ public class ExplosionField extends View {
 
 
     public void explode(final View view) {
-        explode(view,null,ExplosionAnimator.DEFAULT_DURATION);
+        explode(view,null,ExplosionAnimator.DEFAULT_DURATION,100);
     }
 
-    public void explode(final View view,AnimatorListenerAdapter listenerAdapter,long duration) {
+    public void explode(final View view,AnimatorListenerAdapter listenerAdapter,long duration,int delay) {
         Rect r = new Rect();
         view.getGlobalVisibleRect(r);
         int[] location = new int[2];
@@ -116,8 +116,8 @@ public class ExplosionField extends View {
 
         });
         animator.start();
-        view.animate().setDuration(150).setStartDelay(100).scaleX(0f).scaleY(0f).alpha(0f).start();
-        explode(Utils.createBitmapFromView(view), r, 100, duration,listenerAdapter);
+        view.animate().setDuration(150).setStartDelay(delay).scaleX(0f).scaleY(0f).alpha(0f).start();
+        explode(Utils.createBitmapFromView(view), r, delay, duration,listenerAdapter);
     }
 
     public void clear() {
