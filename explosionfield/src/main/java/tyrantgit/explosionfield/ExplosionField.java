@@ -71,12 +71,16 @@ public class ExplosionField extends View {
         mExpandInset[1] = dy;
     }
 
-    public void explode(Bitmap bitmap, Rect bound, long startDelay, long duration) {
+
+
+    public void explode(Bitmap bitmap, Rect bound, long startDelay, long duration, final AnimatorListenerAdapter listenerAdapter) {
         final ExplosionAnimator explosion = new ExplosionAnimator(this, bitmap, bound);
         explosion.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mExplosions.remove(animation);
+                if(listenerAdapter != null)
+                listenerAdapter.onAnimationEnd(animation);
             }
         });
         explosion.setStartDelay(startDelay);
@@ -85,14 +89,18 @@ public class ExplosionField extends View {
         explosion.start();
     }
 
+
     public void explode(final View view) {
+        explode(view,null,ExplosionAnimator.DEFAULT_DURATION,100);
+    }
+
+    public void explode(final View view,AnimatorListenerAdapter listenerAdapter,long duration,int delay) {
         Rect r = new Rect();
         view.getGlobalVisibleRect(r);
         int[] location = new int[2];
         getLocationOnScreen(location);
         r.offset(-location[0], -location[1]);
         r.inset(-mExpandInset[0], -mExpandInset[1]);
-        int startDelay = 100;
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f).setDuration(150);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
@@ -104,10 +112,12 @@ public class ExplosionField extends View {
                 view.setTranslationY((random.nextFloat() - 0.5f) * view.getHeight() * 0.05f);
 
             }
+
+
         });
         animator.start();
-        view.animate().setDuration(150).setStartDelay(startDelay).scaleX(0f).scaleY(0f).alpha(0f).start();
-        explode(Utils.createBitmapFromView(view), r, startDelay, ExplosionAnimator.DEFAULT_DURATION);
+        view.animate().setDuration(150).setStartDelay(delay).scaleX(0f).scaleY(0f).alpha(0f).start();
+        explode(Utils.createBitmapFromView(view), r, delay, duration,listenerAdapter);
     }
 
     public void clear() {
