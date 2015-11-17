@@ -20,6 +20,11 @@ In your `build.gradle`:
 ExplosionField explosionField = ...;
 explosionField.explode(view);
 ```
+If you want to listen to animation status :
+```java
+ExplosionField explosionField = ...;
+explosionField.explode(view,yourAnimatorListenerAdapter);
+```
 
 ## License
 
