@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_marginTop="48dp"
-        android:text="click to destroy"
+        android:text="click to destroy\nor swipe anywhere on the empty area"
         android:layout_height="wrap_content" />
 
 
