@@ -21,6 +21,13 @@ ExplosionField explosionField = ...;
 explosionField.explode(view);
 ```
 
+explosive effects can also be applied directly to bitmaps (with provided bounds) using:
+
+```java
+ExplosionField explosionField = ...;
+explosionField.explode(bitmap, bound, startDelay, duration);
+```
+
 ## License
 
     Copyright 2015 tyrantgit

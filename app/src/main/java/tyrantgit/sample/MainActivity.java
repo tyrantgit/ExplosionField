@@ -106,6 +106,8 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         } else if(event.getAction() == MotionEvent.ACTION_MOVE) {
             float distance = getDistance(lastX, lastY, event);
             if (distance < size/2) {
+                // let's not explode for every move you make !!
+                // limit the explosion to a movement distance of half the explosion size
                 return false;
             }
             lastX = event.getX(); lastY = event.getY();
