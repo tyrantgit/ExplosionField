@@ -45,7 +45,7 @@ public class Utils {
         }
         view.clearFocus();
         Bitmap bitmap = createBitmapSafely(view.getWidth(),
-                view.getHeight(), Bitmap.Config.ARGB_8888, 1);
+            view.getHeight(), Bitmap.Config.ARGB_8888, 1);
         if (bitmap != null) {
             synchronized (sCanvas) {
                 Canvas canvas = sCanvas;

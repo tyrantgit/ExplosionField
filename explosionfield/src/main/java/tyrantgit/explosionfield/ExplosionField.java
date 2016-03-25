@@ -39,6 +39,8 @@ public class ExplosionField extends View {
     private List<ExplosionAnimator> mExplosions = new ArrayList<>();
     private int[] mExpandInset = new int[2];
 
+    public static long DEFAULT_START_DELAY = 100;
+
     public ExplosionField(Context context) {
         super(context);
         init();
@@ -61,7 +63,7 @@ public class ExplosionField extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (ExplosionAnimator explosion : mExplosions) {
+        for(ExplosionAnimator explosion : mExplosions) {
             explosion.draw(canvas);
         }
     }
@@ -85,14 +87,23 @@ public class ExplosionField extends View {
         explosion.start();
     }
 
-    public void explode(final View view) {
-        Rect r = new Rect();
-        view.getGlobalVisibleRect(r);
+    /**
+     * @param view              target view
+     * @param startDelay        start delay
+     * @param duration          animation duration
+     * @param animationListener listen for animation, nullable
+     */
+    public void explode(final View view, long startDelay, long duration, Animator.AnimatorListener animationListener) {
+        Rect rect = new Rect();
+
+        view.getGlobalVisibleRect(rect);
+
         int[] location = new int[2];
         getLocationOnScreen(location);
-        r.offset(-location[0], -location[1]);
-        r.inset(-mExpandInset[0], -mExpandInset[1]);
-        int startDelay = 100;
+
+        rect.offset(- location[0], - location[1]);
+        rect.inset(- mExpandInset[0], - mExpandInset[1]);
+
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f).setDuration(150);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
@@ -102,12 +113,36 @@ public class ExplosionField extends View {
             public void onAnimationUpdate(ValueAnimator animation) {
                 view.setTranslationX((random.nextFloat() - 0.5f) * view.getWidth() * 0.05f);
                 view.setTranslationY((random.nextFloat() - 0.5f) * view.getHeight() * 0.05f);
-
             }
         });
+
+        if (animationListener != null) {
+            animator.addListener(animationListener);
+        }
+
         animator.start();
-        view.animate().setDuration(150).setStartDelay(startDelay).scaleX(0f).scaleY(0f).alpha(0f).start();
-        explode(Utils.createBitmapFromView(view), r, startDelay, ExplosionAnimator.DEFAULT_DURATION);
+
+        view.animate()
+            .setDuration(150)
+            .setStartDelay(startDelay)
+            .scaleX(0f)
+            .scaleY(0f)
+            .alpha(0f)
+            .start();
+
+        explode(Utils.createBitmapFromView(view), rect, startDelay, duration);
+    }
+
+    public void explode(final View view, long startDelay, long duration) {
+        explode(view, startDelay, duration, null);
+    }
+
+    public void explode(final View view, Animator.AnimatorListener animationListener) {
+        explode(view, DEFAULT_START_DELAY, ExplosionAnimator.DEFAULT_DURATION, animationListener);
+    }
+
+    public void explode(final View view) {
+        explode(view, null);
     }
 
     public void clear() {
@@ -119,8 +154,7 @@ public class ExplosionField extends View {
         ViewGroup rootView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
         ExplosionField explosionField = new ExplosionField(activity);
         rootView.addView(explosionField, new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return explosionField;
     }
-
 }
