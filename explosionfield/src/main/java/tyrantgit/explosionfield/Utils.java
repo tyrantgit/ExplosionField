@@ -26,9 +26,6 @@ import android.widget.ImageView;
 
 public class Utils {
 
-    private Utils() {
-    }
-
     private static final float DENSITY = Resources.getSystem().getDisplayMetrics().density;
     private static final Canvas sCanvas = new Canvas();
 

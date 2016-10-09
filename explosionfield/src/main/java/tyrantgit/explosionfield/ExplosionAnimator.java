@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class ExplosionAnimator extends ValueAnimator {
 
-    static long DEFAULT_DURATION = 0x400;
+    public static final long DEFAULT_DURATION = 0x400;
     private static final Interpolator DEFAULT_INTERPOLATOR = new AccelerateInterpolator(0.6f);
     private static final float END_VALUE = 1.4f;
     private static final float X = Utils.dp2Px(5);
