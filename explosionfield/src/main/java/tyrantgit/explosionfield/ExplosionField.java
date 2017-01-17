@@ -36,8 +36,19 @@ import java.util.Random;
 
 public class ExplosionField extends View {
 
+    public interface Listener {
+        void onExplosionFinish();
+    }
+
     private List<ExplosionAnimator> mExplosions = new ArrayList<>();
     private int[] mExpandInset = new int[2];
+
+    private Listener listener;
+ 
+    public ExplosionField listener(Listener listener) {
+        this.listener = listener;
+        return this;
+    }
 
     public ExplosionField(Context context) {
         super(context);
@@ -103,6 +114,14 @@ public class ExplosionField extends View {
                 view.setTranslationX((random.nextFloat() - 0.5f) * view.getWidth() * 0.05f);
                 view.setTranslationY((random.nextFloat() - 0.5f) * view.getHeight() * 0.05f);
 
+            }
+        });
+	animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (listener != null) {
+                    listener.onExplosionFinish();
+                }
             }
         });
         animator.start();
